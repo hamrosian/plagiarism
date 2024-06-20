@@ -8,15 +8,15 @@ Plagiarism Checker is a simple program that finds how similar two text files are
 The normalised information distance between two files is determined using the Kolmogorov Complexity of the files. The Kolmogorov Complexity of a file is essentially the amount of memory needed to describe a program that will produce the given file. For example, consider the strings src_c[:exports code]{abababababababababababababababab} and src_c[:exports code]{oug7DsTmJQ6GC3e9VdLUIYJD4cslM5to}. Even though both strings are 32 bytes long, we can print the first string with a smaller program (something like "print 'ab' 16 times", which is only 19 bytes long) while the second string requires a longer program. Note that a truly random string would require to be embedded in its own program, thus the upper limit for the Kolmogorov complexity of any string is simply its length + additional code depending on the language used to write the program. In a more vague sense, the Kolmogorov Complexity of a file is a representation of how random it is. The higher the Kolmogorov Complexity, the more random a file is. As should be obvious at a glance, determining the Kolmogorov Complexity of an arbitrary file is a NP-hard problem, to which no general solutions exist. It can also be proved that the finding a Kolmogorov Complexity function is equivalent to solving the Turing Halting Problem.
 ** Normalised Information Distance
 The Normalised Information Distance (NID) is a metric that uses the Kolmogorov Complexity of two files to determine the "randomness" (or conversely, the similarity) between them. The formula for the NID of two files is given as follows.
-\begin{align}
+$$
 NID(a,b) &= \frac{K(ab) - \min{(K(a), K(b))}}{\max{(K(a), K(b))}}
-\end{align}
+$$
 Here, $K(x)$ represents the Kolmogorov Complexity of $x$, and $xy$ refers to the concatenation of $x$ and $y$. If $a = b$, then clearly the NID will be close to 0, since $K(a) = K(b) \approx K(ab)$. Similarly if there is no pattern between $a$ and $b$, then $K(ab) = K(a) + K(b)$, implying that the NID will be close to 1.
 ** Compression
 Since determining the Kolmogorov Complexity is practically impossible, we must make approximations. This can be done using compression algorithms, which by their very nature exploit repetitions and patterns. Using this fact, we can determine the Normalised Compression Distance (NCD), which is an approximation of the NID. Mathematically, the NCD can be expressed as follows.
-\begin{align}
+$$
 NCD(a,b) &= \frac{C(ab) - \min{(C(a), C(b))}}{\max{(C(a), C(b))}}
-\end{align}
+$$
 Here, $K(x)$ represents the Compressed Size of $x$, and $xy$ refers to the concatenation of $x$ and $y$. By using different compression algorithms, especially those optimised for various filetypes, we can make closer approximations to the NID, thus improving our program.
 * Compiling
 The program can be compiled using the makefile. You need to have zlib and gcc on your system. Pre-compiled binaries are also available in the bin folder, though it is recommended to compile the program on your own machine.
