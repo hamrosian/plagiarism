@@ -1,6 +1,8 @@
 # Define the compiler
 CC = gcc
 
+VERSION = gnu11
+
 # Define the compiler flags
 CFLAGS = -Wall -Wextra
 
@@ -26,12 +28,12 @@ all: $(TARGET)
 
 # Link the executable
 $(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	$(CC) -std=$(VERSION) $(OBJS) -o $@ $(LDFLAGS)
 
 # Compile .c files to .o files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -std=$(VERSION) $(CFLAGS) -c $< -o $@
 
 # Clean up build files
 clean:

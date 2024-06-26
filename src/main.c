@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 char *concat(const char *s1, const char *s2) {
   char *result = malloc(strlen(s1) + strlen(s2) + 1);
@@ -19,6 +18,7 @@ uint64_t kolmogorov_complexity(char *input) {
   int result = TokenCompress(input, strlen(input), "./.tmp/compressed.txt");
   printf("%d\n", result);
   return result;
+#include <stdlib.h>
 }
 
 int main(int argc, char *argv[]) {
