@@ -1,10 +1,9 @@
+#include "tokencompress.h"
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <zlib.h>
-
 char *concat(const char *s1, const char *s2) {
   char *result = malloc(strlen(s1) + strlen(s2) + 1);
   if (result) {
@@ -17,28 +16,9 @@ char *concat(const char *s1, const char *s2) {
 }
 
 uint64_t kolmogorov_complexity(char *input) {
-  // Input string to compress
-  size_t inputLength = strlen(input) + 1; // Include the null terminator
-
-  // Allocate memory for the compressed data
-  // The maximum size of the compressed buffer is a bit more than the input size
-  uint64_t compressedLength = compressBound(inputLength);
-  Byte *compressedData = (Byte *)malloc(compressedLength);
-
-  if (compressedData == NULL) {
-    fprintf(stderr, "Failed to allocate memory for compressed data.\n");
-  }
-
-  // Compress the input string
-  int result = compress(compressedData, &compressedLength,
-                        (const unsigned char *)input, inputLength);
-
-  if (result != Z_OK) {
-    fprintf(stderr, "Failed to compress data: %d\n", result);
-  }
-  printf("%ld \n", compressedLength);
-  free(compressedData);
-  return compressedLength;
+  int result = TokenCompress(input, strlen(input), "./.tmp/compressed.txt");
+  printf("%d\n", result);
+  return result;
 }
 
 int main(int argc, char *argv[]) {
